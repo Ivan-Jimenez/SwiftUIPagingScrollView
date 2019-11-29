@@ -89,7 +89,7 @@ struct PagingScrollView: View {
         return (trueOffset-leadingOffset) * -1.0
     }
     
-   
+    
     var body: some View {
         GeometryReader { outerGeometry in
             HStack(alignment: .center, spacing: self.tilePadding)  {
@@ -107,13 +107,21 @@ struct PagingScrollView: View {
             .frame(width: self.contentWidth)
             .simultaneousGesture( DragGesture(minimumDistance: 1, coordinateSpace: .local) // can be changed to simultaneous gesture to work with buttons
                 .onChanged { value in
+                    if (self.activePageIndex == 0 && value.translation.width > 0) || (self.activePageIndex == (self.itemCount-1) && value.translation.width < 0) {
+                        self.dragOffset = 0
+                    } else {
                         self.dragOffset = value.translation.width
+                    }
                 }
                 .onEnded { value in
                     // compute nearest index
                     let velocityDiff = (value.predictedEndTranslation.width - self.dragOffset)*self.scrollDampingFactor
                     
-                    withAnimation(.interpolatingSpring(mass: 0.1, stiffness: 20, damping: 1.5, initialVelocity: 0)){
+//                    var mass = 0.1
+//                    if self.activePageIndex == 0 && value.translation.width > 0 {
+//                        mass = 0
+//                    }
+                    withAnimation(.interpolatingSpring(mass: 0.1, stiffness: 15, damping: 1.5, initialVelocity: 0)){
                         self.activePageIndex = self.indexPageForOffset(self.currentScrollOffset()+velocityDiff)
                         self.dragOffset = 0
                     }

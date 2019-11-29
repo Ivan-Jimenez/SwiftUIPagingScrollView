@@ -12,9 +12,11 @@ struct Element: View {
     var image: String
     var body: some View {
         ZStack {
-            Image("background")
+            Image("background1.1")
                 .resizable()
-                .frame(height: 330)
+                .aspectRatio(contentMode: .fill)
+                .offset(y: 10)
+                .clipped()
             Image(image)
             .resizable()
             .aspectRatio(contentMode: .fit)

@@ -40,7 +40,7 @@ struct ContentView: View {
                                             .offset(y: 100)
                                             .aspectRatio(contentMode: .fit)
                                     }
-                                }.offset(x: self.pos/4).animation(.easeInOut, value: 1000)
+                                }.offset(x: self.pos/3)
                             }
                         }
                 }
@@ -53,7 +53,7 @@ struct ContentView: View {
                                     Person(image: person)
                                         .aspectRatio(contentMode: .fit)
                                 }
-                            }.offset(x: self.pos/3)
+                            }.offset(x: self.pos/2)
                         }
                     }
                 }
@@ -69,7 +69,11 @@ struct ContentView: View {
                                             .gesture(
                                                 DragGesture()
                                                     .onChanged { value in
-                                                        self.pos += value.translation.width
+                                                        if (self.activePageIndex == 0 && value.translation.width > 0) || (self.activePageIndex == self.fronts.count-1 && value.translation.width < 0) {
+                                                            self.pos = 0
+                                                        } else {
+                                                            self.pos += value.translation.width
+                                                        }
                                                     }
                                                     .onEnded { value in
                                                         self.pos = 0
@@ -84,7 +88,7 @@ struct ContentView: View {
         Spacer()
             PageControl(numberOfPages: self.persons.count, currentPageIndex: self.activePageIndex)
                 .padding()
-        }.background(Color.white)
+        }.background(Color(red: 250/255, green: 250/255, blue: 250/255))
             .edgesIgnoringSafeArea(.all)
     }
 }
