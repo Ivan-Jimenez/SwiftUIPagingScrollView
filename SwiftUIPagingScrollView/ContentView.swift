@@ -48,58 +48,67 @@ struct Background: View {
 }
 
 struct ContentView: View {
+    // Drag postion
+    @State private var currentPosition: CGSize = .zero
+    @State private var newPosition: CGSize = .zero
+    
+    @State var dragChange = 0
+    @State var pos: CGFloat = 0
+    
     @State private var scrollEffectValue: Double = 13
     @State private var activePageIndex: Int = 0
     
-    let tileWidth: CGFloat = 450
+    let tileWidth: CGFloat = UIScreen.main.bounds.size.width
     let tilePadding: CGFloat = 20
     let elements = ["element1", "element2", "element3"]
     let persons = ["person1", "person2", "person3"]
     
     var body: some View {
+        
         VStack {
             
         Spacer()
             ZStack {
                 GeometryReader { geometry in
-                    PagingScrollView(activePageIndex: self.$activePageIndex, itemCount:self.elements.count ,pageWidth:geometry.size.width, tileWidth:self.tileWidth, tilePadding: self.tilePadding){
-                    ForEach(self.elements, id: \.self) { element in
-                        GeometryReader { geometry2 in
-                            Element(image: element)
-                                .padding(.horizontal, 50.0)
-//                                .rotation3DEffect(Angle(degrees: Double((geometry2.frame(in: .global).minX - self.tileWidth*0.5) / -10 )), axis: (x: 2, y: 11, z: 1))
-//                                .onTapGesture {
-//                                    print ("tap on index: \(index)")
-//                                }
+                    PagingScrollView(activePageIndex: self.$activePageIndex, itemCount:self.elements.count ,pageWidth: geometry.size.width, tileWidth: self.tileWidth, tilePadding: self.tilePadding) {
+                            ForEach(self.elements, id: \.self) { element in
+                                Group {
+                                    GeometryReader { geometry2 in
+                                        Element(image: element)
+                                            .offset(y: 100)
+                                            .aspectRatio(contentMode: .fit)
+                                    }
+                                }.offset(x: self.pos/3).animation(.easeInOut, value: 1000)                    }
                         }
-                    }
                 }
-                }
-                
                 
                 GeometryReader { geometry in
                     PagingScrollView(activePageIndex: self.$activePageIndex, itemCount:self.persons.count ,pageWidth:geometry.size.width, tileWidth:self.tileWidth, tilePadding: self.tilePadding){
                         ForEach(self.persons, id: \.self) { person in
-                        GeometryReader { geometry2 in
-                            Person(image: person)
-                                .padding(.horizontal, 50.0)
-//                                .rotation3DEffect(Angle(degrees: Double((geometry2.frame(in: .global).minX - self.tileWidth*0.5) / -10 )), axis: (x: 2, y: 11, z: 1))
-                                .gesture(DragGesture()
-                                    .onChanged { value in
-                                        print("drag change")
-                                }   // 4.
-                                    .onEnded { value in
-                                        print("on end")
-                                    }
-                            )
+                            GeometryReader { geometry2 in
+                                Person(image: person)
+                                    .aspectRatio(contentMode: .fit)
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged { value in
+                                                self.pos += value.translation.width
+                                            }
+                                            .onEnded { value in
+                                                self.pos = 0
+                                            }
+                                    )
+                            }
                         }
                     }
-                }
                 }
             }
         Spacer()
             PageControl(numberOfPages: self.persons.count, currentPageIndex: self.activePageIndex)
-        }
+                .padding()
+        }.background(Image("background")
+            .resizable()
+            .aspectRatio(contentMode: .fill))
+            .edgesIgnoringSafeArea(.all)
     }
 }
 

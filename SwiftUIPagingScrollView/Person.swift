@@ -12,15 +12,14 @@ struct Person: View {
     var image: String
     var body: some View {
         Image(image)
-            .resizable()
-            .frame(width: 450, height: 450)
-            .aspectRatio(contentMode: .fill)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
         .clipped()
     }
 }
 
 struct Person_Previews: PreviewProvider {
     static var previews: some View {
-        Person(image: "person1")
+        Person(image: "person2")
     }
 }

@@ -13,9 +13,9 @@ struct Element: View {
     var body: some View {
         Image(image)
         .resizable()
-            .frame(width: 450, height: 450)
-            .aspectRatio(contentMode: .fill)
+        .aspectRatio(contentMode: .fit)
         .clipped()
+            .offset(y: -100)
     }
 }
 
