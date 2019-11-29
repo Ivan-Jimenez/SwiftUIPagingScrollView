@@ -8,45 +8,6 @@
 
 import SwiftUI
 
-struct TileView: View {
-    
-    let image: String
-    
-    
-    var body: some View {
-        VStack {
-            ZStack {
-//                Rectangle()
-//                    .opacity(0.0)
-//                    .cornerRadius(20.0)
-                Image(image)
-//                .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .font(.largeTitle)
-            }
-        }
-    }
-}
-
-struct Background: View {
-    
-    let image: String
-    
-    var body: some View {
-        VStack {
-            ZStack {
-//                Rectangle()
-//                    .opacity(0.0)
-//                    .cornerRadius(20.0)
-                Image(image)
-//                .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .font(.largeTitle)
-            }
-        }
-    }
-}
-
 struct ContentView: View {
     // Drag postion
     @State private var currentPosition: CGSize = .zero
@@ -59,9 +20,10 @@ struct ContentView: View {
     @State private var activePageIndex: Int = 0
     
     let tileWidth: CGFloat = UIScreen.main.bounds.size.width
-    let tilePadding: CGFloat = 20
+    let tilePadding: CGFloat = 0
     let elements = ["element1", "element2", "element3"]
     let persons = ["person1", "person2", "person3"]
+    let fronts = ["front1", "front2", "front3"]
     
     var body: some View {
         
@@ -78,36 +40,51 @@ struct ContentView: View {
                                             .offset(y: 100)
                                             .aspectRatio(contentMode: .fit)
                                     }
-                                }.offset(x: self.pos/3).animation(.easeInOut, value: 1000)                    }
+                                }.offset(x: self.pos/4).animation(.easeInOut, value: 1000)
+                            }
                         }
                 }
                 
                 GeometryReader { geometry in
                     PagingScrollView(activePageIndex: self.$activePageIndex, itemCount:self.persons.count ,pageWidth:geometry.size.width, tileWidth:self.tileWidth, tilePadding: self.tilePadding){
                         ForEach(self.persons, id: \.self) { person in
-                            GeometryReader { geometry2 in
-                                Person(image: person)
-                                    .aspectRatio(contentMode: .fit)
-                                    .gesture(
-                                        DragGesture()
-                                            .onChanged { value in
-                                                self.pos += value.translation.width
-                                            }
-                                            .onEnded { value in
-                                                self.pos = 0
-                                            }
-                                    )
-                            }
+                            Group {
+                                GeometryReader { geometry2 in
+                                    Person(image: person)
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }.offset(x: self.pos/3)
                         }
                     }
+                }
+                
+                GeometryReader { geometry in
+                    PagingScrollView(activePageIndex: self.$activePageIndex, itemCount:self.fronts.count ,pageWidth: geometry.size.width, tileWidth: self.tileWidth, tilePadding: 0) {
+                            ForEach(self.fronts, id: \.self) { front in
+                                Group {
+                                    GeometryReader { geometry2 in
+                                        Front(image: front)
+                                            .offset(y: 100)
+                                            .aspectRatio(contentMode: .fit)
+                                            .gesture(
+                                                DragGesture()
+                                                    .onChanged { value in
+                                                        self.pos += value.translation.width
+                                                    }
+                                                    .onEnded { value in
+                                                        self.pos = 0
+                                                    }
+                                            )
+                                    }
+                                }.offset(y: 10)
+                            }
+                        }
                 }
             }
         Spacer()
             PageControl(numberOfPages: self.persons.count, currentPageIndex: self.activePageIndex)
                 .padding()
-        }.background(Image("background")
-            .resizable()
-            .aspectRatio(contentMode: .fill))
+        }.background(Color.white)
             .edgesIgnoringSafeArea(.all)
     }
 }

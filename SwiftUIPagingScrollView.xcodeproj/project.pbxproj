@@ -14,6 +14,7 @@
 		1BD7F0C12315AB03007EA2B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD7F0C02315AB03007EA2B8 /* Assets.xcassets */; };
 		1BD7F0C42315AB03007EA2B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD7F0C32315AB03007EA2B8 /* Preview Assets.xcassets */; };
 		1BD7F0C72315AB03007EA2B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BD7F0C52315AB03007EA2B8 /* LaunchScreen.storyboard */; };
+		5E1451A72391849E001AF1A0 /* Front.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1451A62391849E001AF1A0 /* Front.swift */; };
 		5EA535C3238F4CB30024F094 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA535C2238F4CB30024F094 /* Person.swift */; };
 		5EA535C5238F4EEC0024F094 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA535C4238F4EEC0024F094 /* Element.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 		1BD7F0C32315AB03007EA2B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1BD7F0C62315AB03007EA2B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BD7F0C82315AB03007EA2B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E1451A62391849E001AF1A0 /* Front.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Front.swift; sourceTree = "<group>"; };
 		5EA535C2238F4CB30024F094 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		5EA535C4238F4EEC0024F094 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 				1BD7F0C82315AB03007EA2B8 /* Info.plist */,
 				1BD7F0C22315AB03007EA2B8 /* Preview Content */,
 				1B70ABCD2315ABA3003D8FD6 /* PagingScrollView.swift */,
+				5E1451A62391849E001AF1A0 /* Front.swift */,
 			);
 			path = SwiftUIPagingScrollView;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				1B70ABCE2315ABA3003D8FD6 /* PagingScrollView.swift in Sources */,
 				1BD7F0BD2315AAFF007EA2B8 /* SceneDelegate.swift in Sources */,
 				1BD7F0BF2315AAFF007EA2B8 /* ContentView.swift in Sources */,
+				5E1451A72391849E001AF1A0 /* Front.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

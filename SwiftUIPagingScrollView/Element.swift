@@ -11,11 +11,15 @@ import SwiftUI
 struct Element: View {
     var image: String
     var body: some View {
-        Image(image)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .clipped()
-            .offset(y: -100)
+        ZStack {
+            Image("background")
+                .resizable()
+                .frame(height: 330)
+            Image(image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipped()
+        }.offset(y: -100)
     }
 }
 
